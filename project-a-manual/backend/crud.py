@@ -3,6 +3,7 @@ from typing import List, Optional
 import models
 import schemas
 from datetime import datetime, timezone
+from sqlalchemy import or_
 
 def _tags_to_str(tags: List[str]) -> str:
     return ",".join(tags)
@@ -51,3 +52,17 @@ def delete_note(db: Session, note_id: int):
     db.delete(db_note)
     db.commit()
     return True
+
+def search_notes(db: Session, keyword: str | None = None):
+    query = db.query(models.Note)
+
+    if keyword:
+        kw = f"%{keyword}%"
+        query = query.filter(
+            or_(
+                models.Note.title.ilike(kw),
+                models.Note.body.ilike(kw),
+            )
+        )
+
+    return query.all()

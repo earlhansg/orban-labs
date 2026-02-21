@@ -36,3 +36,7 @@ def delete_note(note_id: int, db: Session = Depends(get_db)):
     success = crud.delete_note(db, note_id)
     if not success:
         raise HTTPException(status_code=404, detail="Note not found")
+    
+@app.get("/notes/search", response_model=List[schemas.NoteResponse])
+def search_notes(keyword: str, db: Session = Depends(get_db)):
+    return crud.search_notes(db, keyword)
