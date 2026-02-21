@@ -19,3 +19,14 @@ def get_note(note_id: int, db: Session = Depends(get_db)):
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
     return note
+
+@app.put("/notes/{note_id}", response_model=schemas.NoteResponse)
+def update_note(
+    note_id: int,
+    note_update: schemas.NoteUpdate,
+    db: Session = Depends(get_db),
+):
+    note = crud.update_note(db, note_id, note_update)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    return note

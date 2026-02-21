@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 import models
 import schemas
+from datetime import datetime, timezone
 
 def _tags_to_str(tags: List[str]) -> str:
     return ",".join(tags)
@@ -22,3 +23,22 @@ def get_note(db: Session, note_id: int):
 
 def get_notes(db: Session, skip: int = 0, limit: int = 50):
     return db.query(models.Note).offset(skip).limit(limit).all()
+
+def update_note(db: Session, note_id: int, note_update: schemas.NoteUpdate):
+    db_note = get_note(db, note_id)
+    if not db_note:
+        return None
+
+    update_data = note_update.model_dump(exclude_unset=True)
+
+    if "tags" in update_data:
+        update_data["tags"] = _tags_to_str(update_data["tags"])
+
+    for field, value in update_data.items():
+        setattr(db_note, field, value)
+
+    db_note.updated_at = datetime.now(timezone.utc)
+
+    db.commit()
+    db.refresh(db_note)
+    return db_note
