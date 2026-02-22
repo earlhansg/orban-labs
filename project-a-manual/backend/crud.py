@@ -62,6 +62,7 @@ def search_notes(db: Session, keyword: str | None = None):
             or_(
                 models.Note.title.ilike(kw),
                 models.Note.body.ilike(kw),
+                models.Note.tags.ilike(kw),
             )
         )
 
