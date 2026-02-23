@@ -3,7 +3,7 @@ import { notesApi } from '@/lib/api';
 import { Note } from '@/types/note';
 import { extractAllTags } from '@/lib/utils';
 import { Metadata } from 'next';
-import NotesClient from './notes-client';
+import NotesPageClient from './notes-page-client';
 
 export const metadata: Metadata = {
   title: 'Notes - Orban Labs',
@@ -46,25 +46,14 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
   const allTags = extractAllTags(notes);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Notes
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          Browse and search your notes collection
-        </p>
-      </div>
-
-      <Suspense fallback={<NotesLoadingSkeleton />}>
-        <NotesClient 
-          initialNotes={notes}
-          availableTags={allTags}
-          initialSearch={search || ''}
-          initialTag={tag || ''}
-        />
-      </Suspense>
-    </div>
+    <Suspense fallback={<NotesLoadingSkeleton />}>
+      <NotesPageClient 
+        initialNotes={notes}
+        availableTags={allTags}
+        initialSearch={search || ''}
+        initialTag={tag || ''}
+      />
+    </Suspense>
   );
 }
 
