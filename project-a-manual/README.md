@@ -122,3 +122,34 @@ Create a `.env.local` file in the frontend directory for environment variables:
 ```
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8001
 ```
+
+### Test Files
+
+- **`test_auth.py`** - Authentication and authorization tests
+- **`test_notes_crud.py`** - Notes CRUD operations tests
+- **`conftest.py`** - Test configuration and fixtures
+
+### Run All Tests
+
+```bash
+# From the test directory
+cd project-a-manual/test
+python -m pytest
+
+# Or from the backend directory
+cd project-a-manual/backend
+python -m pytest ../test/
+```
+
+### Run Specific Test Categories
+
+```bash
+# Authentication tests only
+python -m pytest test_auth.py
+
+# CRUD tests only
+python -m pytest test_notes_crud.py
+
+# Integration tests only
+python -m pytest test_integration.py
+```
