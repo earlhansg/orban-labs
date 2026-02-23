@@ -1,4 +1,5 @@
 import { Note, NoteCreate, NoteUpdate } from '@/types/note';
+import { createAuthHeaders } from '@/lib/auth';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
@@ -12,15 +13,17 @@ export class ApiError extends Error {
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
   
+  const headers = createAuthHeaders(options?.headers as Record<string, string>);
+  
   const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
     ...options,
+    headers,
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new ApiError(response.status, 'Authentication failed: Invalid or missing API key');
+    }
     throw new ApiError(response.status, `API Error: ${response.statusText}`);
   }
 
