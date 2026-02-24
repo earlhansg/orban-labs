@@ -10,7 +10,8 @@ project-b-ai-assisted/
 │   ├── architecture.md      # Detailed architectural decisions and rationale
 │   └── ai-usage-log.md     # Complete log of AI assistance used
 ├── prompts/                 # All prompts used for AI generation
-│   └── 01-project-structure.md
+│   ├── 01-project-structure.md
+│   └── 02-frontend-generation.md
 ├── backend/                 # FastAPI backend implementation
 │   ├── app/                # Application source code
 │   │   ├── main.py         # FastAPI application entry point
@@ -24,7 +25,19 @@ project-b-ai-assisted/
 │   ├── requirements.txt    # Python dependencies
 │   ├── .env.example       # Environment configuration template
 │   └── README.md          # Backend setup and usage instructions
-└── tests/                  # Comprehensive test suite
+├── frontend/                # Next.js 15 frontend implementation
+│   ├── app/                # Next.js App Router
+│   │   ├── components/     # React components
+│   │   ├── utils/          # Utility functions
+│   │   ├── globals.css     # Global styles
+│   │   ├── layout.tsx      # Root layout
+│   │   └── page.tsx        # Main page
+│   ├── public/             # Static assets
+│   ├── package.json        # Dependencies and scripts
+│   ├── tailwind.config.js  # Tailwind configuration
+│   ├── tsconfig.json       # TypeScript configuration
+│   └── README.md           # Frontend setup instructions
+└── tests/                  # Backend test suite
     ├── conftest.py        # Test configuration and fixtures
     ├── test_main.py       # Integration tests for API endpoints
     ├── test_utils.py      # Unit tests for utility functions
@@ -62,15 +75,29 @@ cp .env.example .env
 # Edit .env with your API key
 ```
 
-### 3. Run the Service
+### 3. Run Backend Service
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-The service will be available at `http://localhost:8000`
+The backend will be available at `http://localhost:8000`
 
-### 4. Test the API
+### 4. Setup Frontend
+
+```bash
+cd frontend
+npm install
+cp .env.local.example .env.local
+# Edit .env.local with backend URL and API key
+npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+### 5. Test the Application
+
+Open `http://localhost:3000` in your browser to use the web interface, or test the API directly:
 
 ```bash
 # Create a short URL

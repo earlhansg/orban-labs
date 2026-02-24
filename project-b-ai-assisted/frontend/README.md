@@ -20,7 +20,6 @@ A modern, responsive frontend for the URL shortener service built with Next.js 1
 - **Styling**: Tailwind CSS
 - **Icons**: Lucide React
 - **HTTP Client**: Axios
-- **Testing**: Jest + React Testing Library
 - **Linting**: ESLint with Next.js config
 
 ## 📋 Prerequisites
@@ -89,41 +88,11 @@ frontend/
 │   ├── globals.css         # Global styles
 │   ├── layout.tsx          # Root layout
 │   └── page.tsx            # Home page
-├── tests/                  # Test files
-│   ├── ShortenForm.test.tsx
-│   └── UrlDashboard.test.tsx
 ├── public/                 # Static assets
 ├── package.json
 ├── tailwind.config.js
 ├── tsconfig.json
-├── jest.config.js
 └── README.md
-```
-
-## 🧪 Testing
-
-### Run Tests
-
-```bash
-npm test
-# or
-yarn test
-```
-
-### Run Tests in Watch Mode
-
-```bash
-npm run test:watch
-# or
-yarn test:watch
-```
-
-### Test Coverage
-
-```bash
-npm test -- --coverage
-# or
-yarn test --coverage
 ```
 
 ## 🎨 Components
@@ -304,11 +273,7 @@ Modify validation in:
 2. **Build Errors**
    - Clear `.next` folder: `rm -rf .next`
    - Reinstall dependencies: `rm -rf node_modules && npm install`
-   - Check TypeScript errors: `npm run type-check`
-
-3. **Test Failures**
-   - Update test snapshots: `npm test -- -u`
-   - Check mock configurations in `jest.setup.js`
+   - Check TypeScript errors: `npx tsc --noEmit`
 
 ### Debug Mode
 
@@ -328,8 +293,8 @@ This project is licensed under the MIT License.
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests for new features
-5. Ensure all tests pass
+4. Ensure code follows TypeScript and ESLint standards
+5. Test functionality manually
 6. Submit a pull request
 
 ## 📞 Support
