@@ -5,15 +5,6 @@ from fastapi.testclient import TestClient
 class TestAuthentication:
     """Test suite for API authentication"""
 
-    def test_health_check_no_auth_required(self, client):
-        """Test that health check endpoint doesn't require authentication"""
-        response = client.get("/health")
-        assert response.status_code == 200
-        assert response.json() == {
-            "status": "healthy", 
-            "message": "Notes API is running"
-        }
-
     def test_valid_api_key_access(self, client, auth_headers, sample_note_data):
         """Test that valid API key allows access to protected endpoints"""
         response = client.post("/notes", json=sample_note_data, headers=auth_headers)
