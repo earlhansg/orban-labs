@@ -44,11 +44,6 @@ async def verify_api_key(x_api_key: Optional[str] = Header(None)):
         )
     return x_api_key
 
-# Health check endpoint (no authentication required)
-@app.get("/health")
-def health_check():
-    return {"status": "healthy", "message": "Notes API is running"}
-
 @app.post("/notes", response_model=schemas.NoteResponse)
 def create_note(
     note: schemas.NoteCreate, 
